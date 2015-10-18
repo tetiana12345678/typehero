@@ -14,7 +14,12 @@ defmodule Typehero.RoomChannel do
     next_key = String.slice(text, key_index..key_index)
     case next_key == msg["body"] do
       true ->
-        broadcast! socket, "new:keystroke", %{user: msg["user"], body: msg["body"]}
+        broadcast_from! socket, "new:keystroke", %{
+          user: msg["user"],
+          body: msg["body"],
+          counter: msg["counter"]
+        }
+
         socket = assign(socket, :key_index, key_index + 1)
         {:reply, :ok, socket}
       false ->

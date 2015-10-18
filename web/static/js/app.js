@@ -26,15 +26,26 @@ class App {
 
     //pushing message from client to server
     let username = $("#username")
-    let msgBody  = $("html body")
+    let page  = $("html body")
 
-    msgBody.off("keypress")
-    .on("keypress", e => {
+    username.on("focus", e => {
+      this.enterUserName = true
+
+    }).on("blur", e => {
+      this.enterUserName = false
+    })
+
+    page.bind("keydown keypress", e => {
+      if (this.enterUserName == true) { return }
+      if( e.which == 8 ){
+        e.preventDefault()
+      }
       let key_pressed = String.fromCharCode(e.keyCode)
       console.log(key_pressed)
       channel.push("new:keystroke", {
         user: username.val(),
-        body: key_pressed
+        body: key_pressed,
+        counter: this.counter.getValue()
       }).receive("ok", () => this.successfullKeystroke())
         .receive("error", () => console.log("not good!"))
     })
@@ -53,7 +64,12 @@ class App {
   static renderMessage(msg) {
     let messages = $("#messages")
     let user = this.sanitize(msg.user || "New User")
-
+    let string = $('#text').text()
+    let other = $('#key-others #' + user)
+    if(!other.length) {
+      other = $('<div id="' + user + '"></div>').appendTo('#key-others')
+    }
+    other.text(string.substring(0, msg.counter) + "    ---" + user)
   }
 
   static sanitize(str) { return $("<div/>").text(str).html() }
