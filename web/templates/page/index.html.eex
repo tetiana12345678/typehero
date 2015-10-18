@@ -1,7 +1,7 @@
 <div id="messages"></div>
 
 <div id="container">
-  <div id="text">Hello world</div>
+  <div id="text"><%= @text.content %></div>
   <div id="key-correct"></div>
 </div>
 
