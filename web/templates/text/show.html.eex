@@ -1,0 +1,13 @@
+<h2>Show text</h2>
+
+<ul>
+
+  <li>
+    <strong>Content:</strong>
+    <%= @text.content %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: text_path(@conn, :edit, @text) %>
+<%= link "Back", to: text_path(@conn, :index) %>
