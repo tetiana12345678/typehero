@@ -12,6 +12,9 @@ class App {
     socket.connect()
     socket.onClose( e => console.log("Closed connection") )
 
+    //init counter
+    this.counter = new Counter()
+
     //setting up the main channel
     let channel = socket.chan("rooms:lobby", {})
 
@@ -23,7 +26,7 @@ class App {
 
     //pushing message from client to server
     let username = $("#username")
-    let msgBody  = $("#message")
+    let msgBody  = $("html body")
 
     msgBody.off("keypress")
     .on("keypress", e => {
@@ -32,7 +35,7 @@ class App {
       channel.push("new:keystroke", {
         user: username.val(),
         body: key_pressed
-      }).receive("ok", () => console.log("key correct"))
+      }).receive("ok", () => this.successfullKeystroke())
         .receive("error", () => console.log("not good!"))
     })
 
@@ -40,15 +43,38 @@ class App {
     channel.on( "new:keystroke", msg => this.renderMessage(msg) )
   }
 
+  static successfullKeystroke() {
+    console.log("great")
+    let string = $('#text').text()
+    $('#key-correct').text(string.substring(0, this.counter.getValue()))
+    this.counter.increment()
+  }
+
   static renderMessage(msg) {
     let messages = $("#messages")
-    // let user = this.sanitize(msg.user || "New User")
-    let body = this.sanitize(msg.body)
-    messages.append(`${body}`)
+    let user = this.sanitize(msg.user || "New User")
+
   }
 
   static sanitize(str) { return $("<div/>").text(str).html() }
 }
+
+
+class Counter {
+  constructor() {
+    this.index = 1
+  }
+
+  getValue() {
+    return this.index
+  }
+
+  increment() {
+    this.index++
+  }
+}
+
+
 $( () => App.init() )
 
 export default App
