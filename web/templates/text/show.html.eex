@@ -1,13 +1,22 @@
-<h2>Show text</h2>
+<div id="container">
+  <div id="text"><%= @text.content %></div>
+  <div id="key-correct"></div>
+  <div id="key-others"></div>
+</div>
 
-<ul>
+<span class="keyboard"></span>
 
-  <li>
-    <strong>Content:</strong>
-    <%= @text.content %>
-  </li>
+<div class="col-md-2 form-group">
+  <label>Username</label>
+  <input id="username" type="text" class="form-control" />
+</div>
 
-</ul>
+<!--
+<div class="col-md-6 form-group">
+  <label>Message</label>
+  <input id="message" type="text" class="form-control" />
+</div>
+-->
 
 <%= link "Edit", to: text_path(@conn, :edit, @text) %>
 <%= link "Back", to: text_path(@conn, :index) %>

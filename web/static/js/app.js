@@ -1,28 +1,41 @@
 import {Socket} from "phoenix"
 
 class App {
-  static init() {
+  static join_game_channel(game_id) {
+    this.channel = this.socket.chan("games:" + game_id, {})
+    this.counter = new Counter()
+
+    this.channel.join().receive("ignore", () => console.log("auth error"))
+                  .receive("ok", () => console.log("join ok"))
+                  .after(10000, () => console.log("Connection interruption"))
+    this.channel.onError(e => console.log("something went wrong", e))
+    this.channel.onClose(e => console.log("channel closed", e))
+  }
+
+  static init(game_id) {
+    document.app = this
+    console.log(this)
     //setting up socket
-    let socket = new Socket("/socket", {
+    this.socket = new Socket("/socket", {
       logger: (kind, msg, data) => {
         console.log(`${kind}: ${msg}`, data)
       }
     })
 
-    socket.connect()
-    socket.onClose( e => console.log("Closed connection") )
+    this.socket.connect()
+    this.socket.onClose( e => console.log("Closed connection") )
 
     //init counter
     this.counter = new Counter()
 
     //setting up the main channel
-    let channel = socket.chan("rooms:lobby", {})
+    this.channel = this.socket.chan("rooms:lobby", {})
 
-    channel.join().receive("ignore", () => console.log("auth error"))
+    this.channel.join().receive("ignore", () => console.log("auth error"))
                   .receive("ok", () => console.log("join ok"))
                   .after(10000, () => console.log("Connection interruption"))
-    channel.onError(e => console.log("something went wrong", e))
-    channel.onClose(e => console.log("channel closed", e))
+    this.channel.onError(e => console.log("something went wrong", e))
+    this.channel.onClose(e => console.log("channel closed", e))
 
     //pushing message from client to server
     let username = $("#username")
@@ -47,7 +60,7 @@ class App {
       }
       let key_pressed = String.fromCharCode(e.keyCode)
       console.log(key_pressed)
-      channel.push("new:keystroke", {
+      this.channel.push("new:keystroke", {
         user: username.val(),
         body: key_pressed,
         counter: this.counter.getValue()
@@ -56,7 +69,7 @@ class App {
     })
 
     // msgBody.off("keypress") ...
-    channel.on( "new:keystroke", msg => this.renderMessage(msg) )
+    this.channel.on( "new:keystroke", msg => this.renderMessage(msg) )
   }
 
   static successfullKeystroke() {
@@ -67,7 +80,6 @@ class App {
   }
 
   static renderMessage(msg) {
-    let messages = $("#messages")
     let user = this.sanitize(msg.user || "New User")
     let string = $('#text').text()
     let other = $('#key-others #' + user)

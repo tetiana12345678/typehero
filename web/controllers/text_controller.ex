@@ -1,7 +1,9 @@
 defmodule Typehero.TextController do
   use Typehero.Web, :controller
-
   alias Typehero.Text
+  alias Typehero.Repo
+  alias Typehero.GameServer
+  alias Typehero.GameSupervisor
 
   plug :scrub_params, "text" when action in [:create, :update]
 
