@@ -67,17 +67,27 @@ class App {
   }
 
   static renderMessage(msg) {
-    let messages = $("#messages")
     let user = this.sanitize(msg.user || "New User")
     let string = $('#text').text()
-    let other = $('#key-others #' + user)
+    let user_id = this.hashCode(user)
+    let other = $('#key-others #' + user_id)
     if(!other.length) {
-      other = $('<div id="' + user + '"></div>').appendTo('#key-others')
+      other = $('<div id="' + user_id + '"></div>').appendTo('#key-others')
     }
     other.text(string.substring(0, msg.counter) + "    ---" + user)
   }
 
   static sanitize(str) { return $("<div/>").text(str).html() }
+
+  static hashCode(str) {
+    if (str.length == 0) return hash;
+    for (i = 0; i < str.length; i++) {
+      let char = str.charCodeAt(i);
+      hash = ((hash<<5)-hash)+char;
+      hash = hash & hash; // Convert to 32bit integer
+    }
+    return hash;
+  }
 }
 
 
