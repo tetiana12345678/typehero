@@ -10,9 +10,9 @@ config :typehero, Typehero.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
+  # check_origin: false,
   cache_static_lookup: false,
   watchers: [node: ["node_modules/brunch/bin/brunch", "watch"]]
-
 # Watch static and templates for browser reloading.
 config :typehero, Typehero.Endpoint,
   live_reload: [
