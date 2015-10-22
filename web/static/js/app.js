@@ -80,8 +80,9 @@ class App {
   static sanitize(str) { return $("<div/>").text(str).html() }
 
   static hashCode(str) {
+    let hash = ""
     if (str.length == 0) return hash;
-    for (i = 0; i < str.length; i++) {
+    for (let i = 0; i < str.length; i++) {
       let char = str.charCodeAt(i);
       hash = ((hash<<5)-hash)+char;
       hash = hash & hash; // Convert to 32bit integer
