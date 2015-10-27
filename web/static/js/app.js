@@ -38,15 +38,14 @@ class App {
     page.bind("keydown keypress", e => {
       if (this.enterUserName == true) { return }
       //disable backspace browser weirdness
-      console.log(e.which)
+      console.log("e.which", e.which)
       let rx = /INPUT|SELECT|TEXTAREA/i
       if( e.which == 8 ){
         if(!rx.test(e.target.tagName) || e.target.disabled || e.target.readOnly ){
           e.preventDefault()
         }
       }
-      let key_pressed = String.fromCharCode(e.keyCode)
-      console.log(key_pressed)
+      let key_pressed = String.fromCharCode(e.charCode)
       channel.push("new:keystroke", {
         user: username.val(),
         body: key_pressed,
