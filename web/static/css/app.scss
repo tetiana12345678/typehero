@@ -117,22 +117,17 @@ form.link, form.button {
 
 .container-text {
   position: relative;
-  max-width: none;
-  width: 100%;
 }
 
 #text {
-  z-index: -10;
   width: 100%;
   height: 100%;
-  position: absolute;
   top: 0;
   left: 0;
   font-size: 24px;
 }
 
 #key-correct {
-  z-index: 10;
   color: red;
   font-size: 24px;
 }
@@ -141,16 +136,9 @@ form.link, form.button {
   font-size: 24px;
 }
 
-.stupid-css {
+.fixed-bottom {
   position: fixed;
   bottom: 0px;
-}
-
-label {
-  font-family: "Comic Sans MS", cursive, sans-serif;
-  font-size: 18px;
-  margin-right: 10px;
-  color: #F15523;
 }
 
 .orange-color {
@@ -159,5 +147,17 @@ label {
 }
 
 .user-name {
-  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.welcome-text {
+  color: #F15523;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 18px;
+}
+
+#go {
+  margin-top: 15px;
+  margin-left: 15px;
+  width: 50px;
 }

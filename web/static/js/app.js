@@ -35,6 +35,18 @@ class App {
       this.enterUserName = false
     })
 
+
+    $(document).ready(function(){
+      $(".container-text").hide();
+      $("#replay").hide();
+
+      $("#go").click(function(){
+        $(".container-text").show();
+        $("#replay").show();
+        $(".welcome").hide();
+      });
+    });
+
     page.bind("keydown keypress", e => {
       if (this.enterUserName == true) { return }
       //disable backspace browser weirdness

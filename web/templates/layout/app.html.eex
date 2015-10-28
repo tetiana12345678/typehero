@@ -17,7 +17,6 @@
         <span class="logo"></span>
         <span class="together">Made with <span class="orange-color">LOVE</span> and </span>
         <span class="logo-phoenix"></span>
-        <span>  Multiplayer typing race. Type in your name or not.. get focus anywhere on the window and start typing.</span>
       </div>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>

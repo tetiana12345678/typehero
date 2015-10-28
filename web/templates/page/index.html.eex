@@ -1,19 +1,27 @@
 <div class="container-text">
+  type in the text below:
   <div id="text"><%= @text.content %></div>
   <div id="key-correct"></div>
   <div id="key-others"></div>
 </div>
 
-<div class="stupid-css">
-  <div class="col-md-2 form-group">
-  <div class="user-name">
-    <label>Username</label>
-    <input id="username" type="text" class="form-control" />
-  </div>
+<div class="welcome">
+  <div class="welcome-text">What's your name?</div>
+
+  <div class="col-md-3 form-group">
+    <div class="user-name">
+      <input id="username" type="text" class="form-control" />
+    </div>
   </div>
 
-  <span class="keyboard"></span>
+  <div class="fixed-bottom">
+    <span class="keyboard"></span>
+  </div>
+  <button id="go">Go</button>
 </div>
+
+
+
 <!--
 <div class="col-md-6 form-group">
   <label>Message</label>
