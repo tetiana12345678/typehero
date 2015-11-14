@@ -72,21 +72,6 @@ form.link, form.button {
   }
 }
 
-#container {
-  width: 700px;
-  height: 100px;
-  position: relative;
-}
-
-.keyboard {
-  background-image: url("/images/keyboard-color_coded-75_per.jpg");
-  width: 422px;
-  height: 160px;
-  background-size: 422px 160px;
-  display: inline-block;
-  margin-left: 40px;
-}
-
 .logo {
   width: 114px;
   height: 106px;
@@ -115,49 +100,3 @@ form.link, form.button {
   font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
-.container-text {
-  position: relative;
-}
-
-#text {
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  font-size: 24px;
-}
-
-#key-correct {
-  color: red;
-  font-size: 24px;
-}
-
-#key-others {
-  font-size: 24px;
-}
-
-.fixed-bottom {
-  position: fixed;
-  bottom: 0px;
-}
-
-.orange-color {
-  color: #F15523;
-  font-size: 26px;
-}
-
-.user-name {
-  margin-top: 10px;
-}
-
-.welcome-text {
-  color: #F15523;
-  font-family: "Comic Sans MS", cursive, sans-serif;
-  font-size: 28px;
-}
-
-#go {
-  margin-top: 15px;
-  margin-left: 15px;
-  width: 50px;
-}

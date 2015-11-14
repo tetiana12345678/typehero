@@ -1,8 +1,3 @@
-import {Socket} from "phoenix"
-
-let App = {
-}
-export default App
 // Import the game
 import {Game} from "./game"
 //Start the Game
