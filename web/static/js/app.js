@@ -18,36 +18,11 @@ new Game(700, 450, 'phaser')
 //     //init counter
 //     this.counter = new Counter()
 
-//     //setting up the main channel
-//     let channel = socket.chan("rooms:lobby", {})
-
-//     channel.join().receive("ignore", () => console.log("auth error"))
-//                   .receive("ok", () => console.log("join ok"))
-//                   .after(10000, () => console.log("Connection interruption"))
-//     channel.onError(e => console.log("something went wrong", e))
-//     channel.onClose(e => console.log("channel closed", e))
 
 //     //pushing message from client to server
 //     let username = $("#username")
 //     let page  = $("html body")
 
-//     username.on("focus", e => {
-//       this.enterUserName = true
-
-//     }).on("blur", e => {
-//       this.enterUserName = false
-//     })
-
-
-//     $(document).ready(function(){
-//       $(".container-text").hide();
-//       $("#replay").hide();
-
-//       $("#go").click(function(){
-//         $(".container-text").show();
-//         $("#replay").show();
-//         $(".welcome").hide();
-//       });
 //     });
 
 //     page.bind("keydown keypress", e => {

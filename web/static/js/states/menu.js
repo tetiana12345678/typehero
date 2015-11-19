@@ -1,3 +1,27 @@
+import {Socket} from "phoenix"
+
+//Phoenix sockets and channels
+class App {
+
+  static init() {
+    //setting up the socket
+    console.log("Initialized")
+    let socket = new Socket("/socket")
+    console.log(socket)
+    socket.connect()
+    socket.onClose( e => console.log("Closed connection") )
+
+    //setting up main channel
+    let channel = socket.chan("rooms:lobby", {})
+    channel.join().receive("ignore", () => console.log("auth error"))
+                  .receive("ok", () => console.log("join ok"))
+                  .after(10000, () => console.log("Connection interruption"))
+    channel.onError(e => console.log("something went wrong", e))
+    channel.onClose(e => console.log("channel closed", e))
+  }
+}
+
+//Menu with Phaser
 export class MenuState extends Phaser.State {
   create() {
     this.label = this.addText('Type your name', this.world.centerX, this.world.centerY - 100)
@@ -27,10 +51,15 @@ export class MenuState extends Phaser.State {
     })
     tween.start()
 
-    console.log(name)
+    let fullName = ""
+    fullName = fullName + name._text
+    console.log(fullName)
   }
 
   update() {
     // this.label.rotation += 0.01
   }
 }
+
+App.init()
+export default App

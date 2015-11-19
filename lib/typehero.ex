@@ -8,10 +8,10 @@ defmodule Typehero do
 
     children = [
       # Start the endpoint when the application starts
-      # supervisor(Typehero.Endpoint, []),
+      supervisor(Typehero.Endpoint, []),
       # Start the Ecto repository
-      # worker(Typehero.Repo, []),
-      worker(Typehero.Game, []),
+      worker(Typehero.Repo, []),
+      worker(Typehero.Game, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
@@ -22,8 +22,8 @@ defmodule Typehero do
 
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
-  def config_change(changed, _new, removed) do
-    Typehero.Endpoint.config_change(changed, removed)
-    :ok
-  end
+  # def config_change(changed, _new, removed) do
+  #   Typehero.Endpoint.config_change(changed, removed)
+  #   :ok
+  # end
 end
