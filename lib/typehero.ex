@@ -8,11 +8,10 @@ defmodule Typehero do
 
     children = [
       # Start the endpoint when the application starts
-      supervisor(Typehero.Endpoint, []),
+      # supervisor(Typehero.Endpoint, []),
       # Start the Ecto repository
-      worker(Typehero.Repo, []),
-      # Here you could define other workers and supervisors as children
-      # worker(Typehero.Worker, [arg1, arg2, arg3]),
+      # worker(Typehero.Repo, []),
+      worker(Typehero.Game, []),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
