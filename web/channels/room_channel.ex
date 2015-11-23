@@ -4,8 +4,21 @@ defmodule Typehero.RoomChannel do
   alias Typehero.Text
 
   def join("rooms:lobby", message, socket) do
+    {:ok, serial} = Serial.start_link
+
+    Serial.open(serial, "/dev/cu.usbmodem1411")
+    Serial.set_speed(serial, 9600)
+    Serial.connect(serial)
     # socket = assign(socket, :key_index, 0)
     {:ok, socket}
+  end
+
+  def handle_info({:elixir_serial, serial, data}, state) do
+    #do something with data.
+    IO.inspect data
+    broadcast state, "hello:world", %{data: data}
+
+    {:noreply, state}
   end
 
   # def handle_in("new:keystroke", msg, socket) do

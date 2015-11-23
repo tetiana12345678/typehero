@@ -19,7 +19,10 @@ class App {
                   .after(10000, () => console.log("Connection interruption"))
     channel.onError(e => console.log("something went wrong", e))
     channel.onClose(e => console.log("channel closed", e))
+    channel.on("hello:world", msg =>
+      console.log(msg))
   }
+
 }
 
 //Menu with Phaser
