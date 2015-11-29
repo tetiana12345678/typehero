@@ -28,7 +28,7 @@ void loop()
 
    if (inputValue1 > 100 && !wasDown1) {
     wasDown1 = true;
-    Serial.println("Fuck finger");
+    Serial.println("Middle finger");
   } else if (inputValue1 <= 100) {
     wasDown1 = false;
   }
