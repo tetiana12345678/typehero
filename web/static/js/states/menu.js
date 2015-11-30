@@ -1,29 +1,4 @@
-import {Socket} from "phoenix"
 import {Keyboard} from "./key_map"
-
-//Phoenix sockets and channels
-class App {
-
-  static init() {
-    //setting up the socket
-    console.log("Initialized")
-    let socket = new Socket("/socket")
-    console.log(socket)
-    socket.connect()
-    socket.onClose( e => console.log("Closed connection") )
-
-    //setting up main channel
-    let channel = socket.chan("rooms:lobby", {})
-    channel.join().receive("ignore", () => console.log("auth error"))
-                  .receive("ok", () => console.log("join ok"))
-                  .after(10000, () => console.log("Connection interruption"))
-    channel.onError(e => console.log("something went wrong", e))
-    channel.onClose(e => console.log("channel closed", e))
-    channel.on("hello:world", msg =>
-      console.log(msg))
-  }
-
-}
 
 //Menu with Phaser
 export class MenuState extends Phaser.State {
@@ -33,10 +8,16 @@ export class MenuState extends Phaser.State {
     this.fullName = ""
     this.keyboard = new Keyboard ()
     this.xValue = -80
+    this.fingerLabel = this.addText('Finger', this.world.centerX, this.world.centerY - 200)
   }
 
   getName(name) {
     console.log("name", name)
+  }
+
+  fingerNumber(finger) {
+    this.finger = finger
+    console.log(finger)
   }
 
   addText(message, x, y, style = { font: '54px Arial Black', fill: '#ff69b4' }) {
@@ -69,9 +50,7 @@ export class MenuState extends Phaser.State {
   }
 
   update() {
+    this.fingerLabel.text = `finger ${this.finger}`
     // this.label.rotation += 0.01
   }
 }
-
-App.init()
-export default App

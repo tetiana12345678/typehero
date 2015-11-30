@@ -15,8 +15,11 @@ defmodule Typehero.RoomChannel do
 
   def handle_info({:elixir_serial, serial, data}, state) do
     #do something with data.
-    IO.inspect data
-    broadcast state, "hello:world", %{data: data}
+    cond do
+      data =~ ~r/1/ -> broadcast state, "arduino:finger", %{finger: 1}
+      data =~ ~r/2/ -> broadcast state, "arduino:finger", %{finger: 2}
+      true -> nil
+    end
 
     {:noreply, state}
   end
