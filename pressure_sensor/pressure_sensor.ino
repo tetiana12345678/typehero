@@ -2,8 +2,8 @@
 const int analogPin = A0;//index finger
 const int analogPin1 = A1; // middle finger
 
-int inputValue = 0;//value coming from sensor A0, index finger
-int inputValue1 = 0; //value from sensor A1, middle finger
+int inputValue = 0;//variable to store the value coming from sensor A0
+int inputValue1 = 0; //variable to store value from sensor A1
 
 bool wasDown = false;
 bool wasDown1 = false;
@@ -17,24 +17,26 @@ void loop()
 {
   inputValue = analogRead(analogPin);//read the value from the sensor
 
-  if (inputValue > 900 && !wasDown) {
+  if (inputValue > 100 && !wasDown) {
     wasDown = true;
-    Serial.println("Index finger");
-  } else if (inputValue <= 900) {
+    Serial.println("1"); //Index finger
+  } else if (inputValue <= 100) {
     wasDown = false;
   }
 
-   inputValue1 = analogRead(analogPin1);
+  inputValue1 = analogRead(analogPin1);
 
-   if (inputValue1 > 100 && !wasDown1) {
+  if (inputValue1 > 900 && !wasDown1) {
     wasDown1 = true;
-    Serial.println("Middle finger");
-  } else if (inputValue1 <= 100) {
+    Serial.println("2"); //Middle finger
+  } else if (inputValue1 <= 900) {
     wasDown1 = false;
   }
 
-  //Serial.println(inputValue1);       // print as an ASCII-encoded decimal
+  //Serial.println(inputValue1);
+  //Serial.println(inputValue);
 
+  // delay(10);
 
 }
 /*******************************************/
