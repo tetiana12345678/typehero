@@ -18,6 +18,7 @@ defmodule Typehero.RoomChannel do
     cond do
       data =~ ~r/1/ -> broadcast state, "arduino:finger", %{finger: 1}
       data =~ ~r/2/ -> broadcast state, "arduino:finger", %{finger: 2}
+      data =~ ~r/3/ -> broadcast state, "arduino:finger", %{finger: 3}
       true -> nil
     end
 

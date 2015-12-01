@@ -8,7 +8,6 @@ export class MenuState extends Phaser.State {
     this.fullName = ""
     this.keyboard = new Keyboard ()
     this.xValue = -80
-    this.fingerLabel = this.addText('Finger', this.world.centerX, this.world.centerY - 200)
   }
 
   getName(name) {
@@ -16,7 +15,12 @@ export class MenuState extends Phaser.State {
   }
 
   fingerNumber(finger) {
-    this.finger = finger
+    let fingerLabel = this.addText(`Finger ${finger}`, this.world.centerX, this.world.centerY - 200)
+    let tween = this.add.tween(fingerLabel)
+    tween.to({x: 350, y: 350}, 200, Phaser.Easing.Linear.None)
+    tween.to({alpha: 0}, 1000, Phaser.Easing.Linear.None)
+    tween.onComplete.add(function() { fingerLabel.destroy()})
+    tween.start()
     console.log(finger)
   }
 
@@ -50,7 +54,6 @@ export class MenuState extends Phaser.State {
   }
 
   update() {
-    this.fingerLabel.text = `finger ${this.finger}`
     // this.label.rotation += 0.01
   }
 }
