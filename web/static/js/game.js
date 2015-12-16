@@ -1,7 +1,5 @@
 import {MenuState} from './states/menu'
-
 import {Socket} from "phoenix"
-
 
 export class Game extends Phaser.Game {
 
@@ -11,7 +9,6 @@ export class Game extends Phaser.Game {
 
     //Phoenix sockets and channels
     let socket = new Socket("/socket")
-    console.log(socket)
     socket.connect()
     socket.onClose( e => console.log("Closed connection") )
 
@@ -24,14 +21,41 @@ export class Game extends Phaser.Game {
     channel.onClose(e => console.log("channel closed", e))
     channel.on("arduino:finger", ({finger}) => this.fingerPress(finger))
 
+    // channel.on("user:join", msg => console.log("we are getting user name", msg) )
+    channel.on("user:join", msg => this.startGameMessage(msg)  )
+
     // Game States
     this.state.add('menu', new MenuState(), false)
     this.state.start('menu')
+    this.channel = channel
   }
 
+  sendToServer(name) {
+    this.channel.push("user:join", {
+      user: name
+    })
+  }
+
+  sendToServerKey(name, key) {
+    console.log("name", name)
+    console.log("key", key)
+    this.channel.push("user:key", {
+      user: name,
+      body: key
+    }).receive("ok", () => msg => this.startGameMessage(msg))
+      .receive("error", () => console.log("not good!"))
+  }
+
+
+  //Display to browser info from channel
   fingerPress(finger) {
     let currentState = this.state.states[this.state.current]
     currentState.fingerNumber(finger)
+  }
+
+  startGameMessage(msg) {
+    let currentState = this.state.states[this.state.current]
+    currentState.startGame(msg)
   }
 }
 

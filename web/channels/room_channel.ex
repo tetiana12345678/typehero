@@ -1,9 +1,7 @@
 defmodule Typehero.RoomChannel do
   use Phoenix.Channel
-  alias Typehero.Repo
-  alias Typehero.Text
 
-  def join("rooms:lobby", message, socket) do
+  def join("rooms:lobby", msg, socket) do
     {:ok, serial} = Serial.start_link
 
     Serial.open(serial, "/dev/cu.usbmodem1411")
@@ -23,6 +21,31 @@ defmodule Typehero.RoomChannel do
     end
 
     {:noreply, state}
+  end
+
+  def handle_in("user:join", msg, socket) do
+    broadcast! socket, "user:join", %{ user: msg["user"] }
+    {:noreply, socket}
+  end
+
+  def handle_in("user:key", msg, socket) do
+    key_index = socket.assigns[:key_index] || 0
+    IO.puts("hello #{key_index} ")
+    text = "hello world"
+    next_key = String.slice(text, key_index..key_index)
+    case next_key == msg["body"] do
+      true ->
+        broadcast! socket, "user:key", %{
+          user: msg["user"],
+          body: msg["body"]
+        }
+
+        socket = assign(socket, :key_index, key_index + 1)
+
+        {:reply, :ok, socket}
+      false ->
+        {:reply, :error, socket}
+    end
   end
 
   # def handle_in("new:keystroke", msg, socket) do
