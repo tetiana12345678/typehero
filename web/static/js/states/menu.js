@@ -10,6 +10,7 @@ export class MenuState extends Phaser.State {
     this.xValueGame = -200
     this.xValue = -80
     this.insideGame = false
+    this.counter = 0
   }
 
   fingerNumber(finger) {
@@ -23,8 +24,13 @@ export class MenuState extends Phaser.State {
   }
 
   startGame(msg) {
+    this.counter = this.counter + 1
     this.game.world.removeAll()
     this.insideGame = true
+    let typeText = this.addText('hello world', this.world.centerX, this.world.centerY - 50)
+    console.log("typeText._text", typeText._text)
+    console.log("typeText", typeText)
+    console.log(msg.user)
     this.addText(`${msg.user}`, this.world.centerX, this.world.centerY - 180)
   }
 

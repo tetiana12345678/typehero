@@ -46,9 +46,9 @@ void loop()
   }
 
 
-  //Serial.print(inputValue);
+  //Serial.println(inputValue);
   //Serial.print("   ");
-  //Serial.print(inputValue1);
+ // Serial.println(inputValue1);
   //Serial.print("   ");
   //Serial.print(inputValue2);
   //Serial.println();
