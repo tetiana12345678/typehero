@@ -21,8 +21,8 @@ export class Game extends Phaser.Game {
     channel.onClose(e => console.log("channel closed", e))
     channel.on("arduino:finger", ({finger}) => this.fingerPress(finger))
 
-    // channel.on("user:join", msg => console.log("we are getting user name", msg) )
-    channel.on("user:join", msg => this.startGameMessage(msg)  )
+    channel.on("user:join", msg => this.startGameMessage(msg))
+    channel.on("user:key", msg => this.playGameMessage(msg))
 
     // Game States
     this.state.add('menu', new MenuState(), false)
@@ -37,13 +37,12 @@ export class Game extends Phaser.Game {
   }
 
   sendToServerKey(name, key) {
-    console.log("name", name)
-    console.log("key", key)
+    console.log("name in sendToServerKey", name)
+    console.log("key in sendToServerKey", key)
     this.channel.push("user:key", {
       user: name,
       body: key
-    }).receive("ok", () => msg => this.startGameMessage(msg))
-      .receive("error", () => console.log("not good!"))
+    })
   }
 
 
@@ -56,6 +55,11 @@ export class Game extends Phaser.Game {
   startGameMessage(msg) {
     let currentState = this.state.states[this.state.current]
     currentState.startGame(msg)
+  }
+
+  playGameMessage(msg) {
+    let currentState = this.state.states[this.state.current]
+    currentState.playGame(msg)
   }
 }
 

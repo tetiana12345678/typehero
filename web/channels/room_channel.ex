@@ -24,20 +24,23 @@ defmodule Typehero.RoomChannel do
   end
 
   def handle_in("user:join", msg, socket) do
-    broadcast! socket, "user:join", %{ user: msg["user"] }
+    IO.puts " msg in user:join #{inspect msg}"
+    broadcast! socket, "user:join", %{ user: msg["user"], number: msg["number"] }
     {:noreply, socket}
   end
 
   def handle_in("user:key", msg, socket) do
+    IO.puts "msg in user:key #{ inspect msg}"
     key_index = socket.assigns[:key_index] || 0
-    IO.puts("hello #{key_index} ")
-    text = "hello world"
+    text = "hello world"    #text = Repo.get!(Text, 1).content
+    inspect msg
     next_key = String.slice(text, key_index..key_index)
     case next_key == msg["body"] do
       true ->
-        broadcast! socket, "user:key", %{
+        broadcast_from! socket, "user:key", %{
           user: msg["user"],
-          body: msg["body"]
+          body: msg["body"],
+          number: msg["number"]
         }
 
         socket = assign(socket, :key_index, key_index + 1)
@@ -47,23 +50,4 @@ defmodule Typehero.RoomChannel do
         {:reply, :error, socket}
     end
   end
-
-  # def handle_in("new:keystroke", msg, socket) do
-  #   key_index = socket.assigns[:key_index]
-  #   text = Repo.get!(Text, 1).content
-  #   next_key = String.slice(text, key_index..key_index)
-  #   case next_key == msg["body"] do
-  #     true ->
-  #       broadcast_from! socket, "new:keystroke", %{
-  #         user: msg["user"],
-  #         body: msg["body"],
-  #         counter: msg["counter"]
-  #       }
-
-  #       socket = assign(socket, :key_index, key_index + 1)
-  #       {:reply, :ok, socket}
-  #     false ->
-  #       {:reply, :error, socket}
-  #   end
-  # end
 end

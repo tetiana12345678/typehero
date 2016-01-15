@@ -10,7 +10,7 @@ export class MenuState extends Phaser.State {
     this.xValueGame = -200
     this.xValue = -80
     this.insideGame = false
-    this.counter = 0
+    this.stringToType = 'hello world'
   }
 
   fingerNumber(finger) {
@@ -24,14 +24,19 @@ export class MenuState extends Phaser.State {
   }
 
   startGame(msg) {
-    this.counter = this.counter + 1
     this.game.world.removeAll()
     this.insideGame = true
-    let typeText = this.addText('hello world', this.world.centerX, this.world.centerY - 50)
-    console.log("typeText._text", typeText._text)
-    console.log("typeText", typeText)
-    console.log(msg.user)
+    let typeText = this.addText(this.stringToType, this.world.centerX, this.world.centerY - 50)
+    this.stringToType = this.stringToType.substring(1)
     this.addText(`${msg.user}`, this.world.centerX, this.world.centerY - 180)
+  }
+
+  playGame(msg) {
+    // this.game.world.removeAll()
+    let typeText = this.addText(this.stringToType, this.world.centerX, this.world.centerY - 50)
+    this.stringToType = this.stringToType.substring(1)
+    typeText._text.substring(1)
+    this.addText(`${msg.user}`, this.world.centerX, this.world.centerY - 100)
   }
 
   addText(message, x, y, style = { font: '48px Arial Black', fill: '#ff69b4' }) {
@@ -46,14 +51,12 @@ export class MenuState extends Phaser.State {
   onDown(e) {
     let keyCode = this.keyboard.charFromCode(e.which, e.shiftKey)
     if (this.insideGame == false) {
-      console.log("onDown")
       if (e.which == 13) {
         this.game.sendToServer(this.fullName)
       }
       this.recordLetter(keyCode)
     } else {
       this.recordKeyStroke(keyCode)
-      console.log("onKeyPress")
     }
   }
 
@@ -74,7 +77,6 @@ export class MenuState extends Phaser.State {
     this.xValue = this.xValue + 50
 
     this.fullName = this.fullName + name._text
-    console.log(this.fullName)
   }
 
   update() {
