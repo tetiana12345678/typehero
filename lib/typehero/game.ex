@@ -1,10 +1,12 @@
 defmodule Typehero.Game do
-  use GenServer
-
-  @registered_name TypeheroGame
 
   def start_link do
-    GenServer.start_link(__MODULE__, %{}, [name: @registered_name])
+    import Supervisor.Spec, warn: false
+    children = [
+      supervisor(Typehero.WordSupervisor, []),
+      worker(Typehero.GameServer, [])
+    ]
+    opts = [strategy: :rest_for_one, name: __MODULE__]
+    Supervisor.start_link(children, opts)
   end
-
 end
