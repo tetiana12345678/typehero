@@ -29,12 +29,12 @@ defmodule Typehero.Mixfile do
   #
   # Type `mix help deps` for examples and options
   defp deps do
-    [{:phoenix, "~> 0.15"},
+    [{:phoenix, "~> 1.1.6"},
      {:phoenix_ecto, "~> 0.8"},
      {:postgrex, ">= 0.0.0"},
-     {:phoenix_html, "~> 1.4"},
-     {:phoenix_live_reload, "~> 0.5", only: :dev},
+     {:phoenix_html, "~> 2.5.1"},
+     {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:cowboy, "~> 1.0"},
-     {:serial, "~> 0.1.0"} ]
+     {:serial, "~> 0.1.2"} ]
   end
 end

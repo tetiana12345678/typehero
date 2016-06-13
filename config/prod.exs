@@ -14,7 +14,7 @@ config :logger, level: :info
 config :typehero, Typehero.Repo,
   adapter: Ecto.Adapters.Postgres,
   url: System.get_env("DATABASE_URL"),
-  size: 20
+  pool_size: 20
 
 # For production, we configure the host to read the PORT
 # from the system environment. Therefore, you will need
