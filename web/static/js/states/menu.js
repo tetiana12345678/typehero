@@ -13,16 +13,6 @@ export class MenuState extends Phaser.State {
     this.stringToType = 'hello world'
   }
 
-  fingerNumber(finger) {
-    let fingerLabel = this.addText(`Finger ${finger}`, this.world.centerX, this.world.centerY - 200)
-    let tween = this.add.tween(fingerLabel)
-    tween.to({x: 350, y: 350}, 200, Phaser.Easing.Linear.None)
-    tween.to({alpha: 0}, 1000, Phaser.Easing.Linear.None)
-    tween.onComplete.add(function() { fingerLabel.destroy()})
-    tween.start()
-    console.log(finger)
-  }
-
   startGame(msg) {
     this.game.world.removeAll()
     this.insideGame = true

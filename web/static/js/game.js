@@ -19,7 +19,6 @@ export class Game extends Phaser.Game {
                   .after(10000, () => console.log("Connection interruption"))
     channel.onError(e => console.log("something went wrong", e))
     channel.onClose(e => console.log("channel closed", e))
-    channel.on("arduino:finger", ({finger}) => this.fingerPress(finger))
 
     channel.on("user:join", msg => this.startGameMessage(msg))
     channel.on("user:key", msg => this.playGameMessage(msg))
@@ -47,10 +46,6 @@ export class Game extends Phaser.Game {
 
 
   //Display to browser info from channel
-  fingerPress(finger) {
-    let currentState = this.state.states[this.state.current]
-    currentState.fingerNumber(finger)
-  }
 
   startGameMessage(msg) {
     let currentState = this.state.states[this.state.current]
